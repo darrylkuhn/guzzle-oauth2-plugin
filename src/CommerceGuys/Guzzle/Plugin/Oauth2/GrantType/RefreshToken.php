@@ -36,16 +36,19 @@ class RefreshToken implements GrantTypeInterface
     public function getTokenData($refreshToken = null)
     {
         $postBody = array(
+            'client_id' => $this->config['client_id'], 
+            'client_secret' => $this->config['client_secret'],
             'grant_type' => 'refresh_token',
             // If no refresh token was provided to the method, use the one
             // provided to the constructor.
             'refresh_token' => $refreshToken ?: $this->config['refresh_token'],
         );
+
         if ($this->config['scope']) {
             $postBody['scope'] = $this->config['scope'];
         }
+
         $request = $this->client->post(null, array(), $postBody);
-        $request->setAuth($this->config['client_id'], $this->config['client_secret']);
         $response = $request->send();
         $data = $response->json();
 

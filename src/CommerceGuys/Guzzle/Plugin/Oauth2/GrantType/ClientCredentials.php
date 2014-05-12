@@ -35,13 +35,16 @@ class ClientCredentials implements GrantTypeInterface
     public function getTokenData()
     {
         $postBody = array(
+            'client_id' => $this->config['client_id'], 
+            'client_secret' => $this->config['client_secret'],
             'grant_type' => 'client_credentials',
         );
+
         if ($this->config['scope']) {
             $postBody['scope'] = $this->config['scope'];
         }
+        
         $request = $this->client->post(null, array(), $postBody);
-        $request->setAuth($this->config['client_id'], $this->config['client_secret']);
         $response = $request->send();
         $data = $response->json();
 

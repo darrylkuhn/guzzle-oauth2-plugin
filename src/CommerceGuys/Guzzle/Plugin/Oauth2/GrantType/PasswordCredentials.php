@@ -41,11 +41,12 @@ class PasswordCredentials implements GrantTypeInterface
             'client_id' => $this->config['client_id'], 
             'client_secret' => $this->config['client_secret']
         );
+
         if ($this->config['scope']) {
             $postBody['scope'] = $this->config['scope'];
         }
-        $request = $this->client->post(null, array(), $postBody);
-        //$request->setAuth($this->config['client_id'], $this->config['client_secret']);
+
+        $request = $this->client->post(null, [], $postBody);
         $response = $request->send();
         $data = $response->json();
 
